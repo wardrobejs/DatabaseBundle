@@ -1,0 +1,14 @@
+{
+  "name": "@wardrobe/databasebundle",
+  "version": "1.0.0",
+  "description": "Database bundle for wardrobe",
+  "main": "DatabaseBundle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yme-Jan Iedema <yme-jan@iedema.me>",
+  "license": "MIT",
+  "peerDependencies": {
+    "@wardrobe/wardrobe": "2.x"
+  }
+}

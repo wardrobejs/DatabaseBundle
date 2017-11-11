@@ -1,0 +1,25 @@
+services:
+    entity_manager:
+        class: !require '@DatabaseBundle://Database/EntityManager'
+        arguments:
+            - '@container'
+            - '@config'
+
+    entity:
+        class: !require '@DatabaseBundle://Annotation/Entity'
+        tags: ['annotation']
+
+    database.driver.mongodb:
+        class: !require '@DatabaseBundle://Drivers/MongoDB'
+        arguments:
+            - '@config'
+
+    database.driver.mysql:
+        class: !require '@DatabaseBundle://Drivers/MySQL'
+        arguments:
+            - '@config'
+
+    database.driver.pgsql:
+        class: !require '@DatabaseBundle://Drivers/PostgreSQL'
+        arguments:
+            - '@config'

@@ -24,16 +24,34 @@ class EntityManager
 
     }
 
-    persist (obj)
+    persist (entity)
     {
-        this._queue.push(obj);
+        if (entity) {
+            this._queue.push(entity);
+        }
+    }
+
+    remove (entity)
+    {
+        if (entity) {
+            entity.__remove = true;
+            this._queue.push(entity);
+        }
     }
 
     async flush (driver = undefined)
     {
         let obj;
         while (obj = this._queue.shift()) {
-            await this.getRepository(obj.constructor, driver).save(obj);
+
+            let repository = this.getRepository(obj.constructor, driver);
+
+            if (typeof obj.__remove !== 'undefined') {
+                await repository.remove(obj);
+                continue;
+            }
+
+            await repository.save(obj);
         }
     }
 
@@ -41,6 +59,10 @@ class EntityManager
     {
         if (typeof driver === 'undefined') {
             driver = this._driver;
+        }
+
+        if (typeof driver === 'string') {
+            driver = this._container.has(driver) ? this._container.get(driver) : this._container.get(`database.driver.${driver}`);
         }
 
         if (typeof model !== 'function') {

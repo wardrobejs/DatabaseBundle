@@ -2,7 +2,7 @@ class Driver
 {
     constructor ()
     {
-        let methods = ['find', 'findAll', 'findBy', 'findOneBy', 'count', 'save'];
+        let methods = ['find', 'findAll', 'findBy', 'findOneBy', 'count', 'save', 'remove'];
         let missing = [];
         for (let method of methods) {
             if (!Object.getPrototypeOf(this).hasOwnProperty(method)) {

@@ -1,6 +1,8 @@
 const doctrine         = require('doctrine'),
       AnnotationParser = require('@wardrobe/wardrobe').AnnotationParser;
 
+const Schema = require('../Database/Schema');
+
 class Entity
 {
     constructor ()
@@ -22,11 +24,15 @@ class Entity
                 continue;
             }
 
-            schema[prop] = {
+            schema[props[prop].Column.value || prop] = {
+                key: prop,
                 type: this._getType(props[prop]),
-                unique: (typeof props[prop].Column.unique !== 'undefined')
-            }
+                unique: (typeof props[prop].Id !== 'undefined') || (typeof props[prop].Column.unique !== 'undefined'),
+                primary: (typeof props[prop].Id !== 'undefined')
+            };
         }
+
+        schema = new Schema(_module.exports.name, schema);
 
         _module.exports.getSchema = function (){
             return schema;

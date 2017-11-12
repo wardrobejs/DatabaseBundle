@@ -1,9 +1,11 @@
+const Schema = require('./Schema');
+
 class Repository
 {
     constructor (model, driver)
     {
-        if (typeof model !== 'function') {
-            throw new Error('Cannot initialize repository on instantiated entities');
+        if (!(model.getSchema() instanceof Schema)) {
+            throw new Error(`Entity does not contain a schema`);
         }
 
         return new Proxy(this, {

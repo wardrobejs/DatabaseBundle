@@ -1,6 +1,5 @@
-const parameters       = require('get-parameter-names'),
-      doctrine         = require('doctrine'),
-      AnnotationParser = require('../../Wardrobe/AnnotationParser');
+const doctrine         = require('doctrine'),
+      AnnotationParser = require('@wardrobe/wardrobe').AnnotationParser;
 
 class Entity
 {
@@ -29,7 +28,7 @@ class Entity
             }
         }
 
-        _module.exports.prototype.getSchema = function (){
+        _module.exports.getSchema = function (){
             return schema;
         };
 
@@ -77,7 +76,6 @@ class Entity
 
         return _props;
     }
-
 }
 
 module.exports = Entity;

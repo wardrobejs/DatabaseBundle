@@ -9,6 +9,28 @@ class Repository
         return new Proxy(this, {
             get: function (invoker, target, args) {
 
+                if(target.startsWith('findBy')) {
+                    let by = target.substr(6).lcfirst();
+                    // validate by
+                    return async function () {
+                        return await driver['findBy'](model, by, ...arguments);
+                    }
+                }
+
+                if(target.startsWith('findOneBy')) {
+                    let by = target.substr(9).lcfirst();
+                    return async function () {
+                        return await driver['findOneBy'](model, by, ...arguments);
+                    }
+                }
+
+                if(target.startsWith('countBy')) {
+                    let by = target.substr(7).lcfirst();
+                    return async function () {
+                        return await driver['count'](model, by, ...arguments);
+                    }
+                }
+
                 return async function () {
 
                     if(typeof driver[target] === 'undefined') {

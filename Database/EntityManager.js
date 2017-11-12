@@ -1,7 +1,5 @@
 const Repository = require('./Repository');
 
-const InvalidArgumentException = require('../../Wardrobe/Exception/InvalidArgumentException');
-
 class EntityManager
 {
     constructor (container, config)
@@ -31,27 +29,12 @@ class EntityManager
         this._queue.push(obj);
     }
 
-    flush ()
+    async flush (driver = undefined)
     {
-        return new Promise(async (resolve, reject) => {
-            let errors = [];
-
-            let obj;
-            while (obj = this._queue.shift()) {
-                try {
-                    await this._promisify(obj);
-                } catch (e) {
-                    errors.push(e);
-                }
-            }
-
-            if (errors.length) {
-                reject(errors);
-                return;
-            }
-
-            resolve();
-        });
+        let obj;
+        while (obj = this._queue.shift()) {
+            await this.getRepository(obj.constructor, driver).save(obj);
+        }
     }
 
     getRepository (model, driver)
@@ -61,11 +44,11 @@ class EntityManager
         }
 
         if (typeof model !== 'function') {
-            throw new InvalidArgumentException(typeof model, 'function');
+            throw new Error(typeof model, 'function');
         }
 
-        if (typeof model.prototype.getSchema === 'undefined') {
-            throw new InvalidArgumentException(`${model.name} is not an entity, did you forget to add @Entity?`);
+        if (typeof model.getSchema === 'undefined') {
+            throw new Error(`${model.name} is not an entity, did you forget to add @Entity?`);
         }
 
         if (typeof this._repositories[driver.constructor.name] === 'undefined') {
@@ -77,17 +60,6 @@ class EntityManager
         }
 
         return this._repositories[driver.constructor.name][model.name];
-    }
-
-    _promisify (obj)
-    {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => { // simulate database save callback thingy
-
-                // find active driver
-                resolve();
-            }, 0);
-        });
     }
 }
 

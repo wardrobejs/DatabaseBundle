@@ -1,13 +1,17 @@
 {
   "name": "@wardrobe/databasebundle",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Database bundle for wardrobe",
   "main": "DatabaseBundle.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Yme-Jan Iedema <yme-jan@iedema.me>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wardrobejs/DatabaseBundle"
+  },
+  "dependencies": {
+    "doctrine": "^2.0.0"
+  },
   "peerDependencies": {
     "@wardrobe/wardrobe": "2.x"
   }

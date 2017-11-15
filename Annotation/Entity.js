@@ -25,16 +25,16 @@ class Entity
             }
 
             schema[props[prop].Column.value || prop] = {
-                key: prop,
-                type: this._getType(props[prop]),
-                unique: (typeof props[prop].Id !== 'undefined') || (typeof props[prop].Column.unique !== 'undefined'),
+                key:     prop,
+                type:    this._getType(props[prop]),
+                unique:  (typeof props[prop].Id !== 'undefined') || (typeof props[prop].Column.unique !== 'undefined'),
                 primary: (typeof props[prop].Id !== 'undefined')
             };
         }
 
         schema = new Schema(_module.exports.name, schema);
 
-        _module.exports.getSchema = function (){
+        _module.exports.getSchema = function () {
             return schema;
         };
 

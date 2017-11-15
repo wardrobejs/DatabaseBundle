@@ -1,6 +1,6 @@
 {
   "name": "@wardrobe/databasebundle",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Database bundle for wardrobe",
   "main": "DatabaseBundle.js",
   "author": "Yme-Jan Iedema <yme-jan@iedema.me>",
